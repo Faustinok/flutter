@@ -21,8 +21,7 @@ class User {
   double get debito => _debito;
 
   User.vazio();
-  User(this._nome, this._sobrenome, this._conta, this._email, this._senha,
-      this._debito);
+  User(this._nome, this._sobrenome, this._conta, this._email, this._senha,this._debito);
   User.fromMap(Map map) {
     _id = map["id"];
     _nome = map["nome"];
@@ -47,6 +46,15 @@ class User {
     return map;
   }
 
+  static Database _db;
+  Future<Database> get db async {
+    if (_db != null) {
+      return _db;
+    }
+    _db = await initDb();
+    return _db;
+  }
+
   Future<Database> initDb() async {
     return getDatabasesPath().then((dbPath) {
       final String path = join(dbPath, 'unialfabanc.db');
@@ -57,9 +65,7 @@ class User {
         onCreate: (db, version) {
           // Run the CREATE TABLE statement on the database.
           return db.execute(
-              "create table usuario (id integer primary key,nome text,sobrenome text,conta double,email text,senha text,debito real,UNIQUE(email));");
-
-          //return db.execute("create table movimentacao (id_from integer,id_to integer,dt_mov  REAL DEFAULT (datetime('now', 'localtime'),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id))",);
+              "create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); create table movimentacao(id_from integer,id_to integer,dt_mov  REAL DEFAULT (datetime('now', 'localtime')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
         },
         version: 1,
       );
@@ -67,14 +73,45 @@ class User {
   }
 
   Future<int> insertUser(User user) async {
-    
     return initDb().then((db) {
-      
+      print("inserido");
       return db.insert("usuario", user.toMap());
     });
+    
   }
 
   Future<User> selectUserByLogin(String email, String senha) async {
-    
+    var client = await db;
+    User user;
+    final Future<List<Map<String, dynamic>>> futureMaps = client.query(
+        'usuario',
+        where: 'email = ? and senha =?',
+        whereArgs: [email, senha]);
+    var maps = await futureMaps;
+    if (maps.length != 0) {
+      user =User.fromMap(maps.first);
+      print(user.nome);
+      return user;      
+    } else {
+      return null;
+    } 
+     
   }
+  Future<User> selectUserById(int idd) async {
+    var client = await db;
+    User user;
+    final Future<List<Map<String, dynamic>>> futureMaps = client.query(
+        'usuario',
+        where: 'id = ?',
+        whereArgs: [idd]);
+    var maps = await futureMaps;
+    if (maps.length != 0) {
+      user =User.fromMap(maps.first);
+      print(user.nome);
+      return user;      
+    } else {
+      return null;
+    } 
+     
+  }  
 }

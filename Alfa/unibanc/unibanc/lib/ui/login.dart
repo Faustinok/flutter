@@ -9,8 +9,8 @@ class Login extends StatelessWidget {
   User userValidator;
   TextEditingController txtUserValidate =new TextEditingController();
   TextEditingController txtPwdValidate = new TextEditingController();
-  validarForm(){
-   return user.selectUser(txtUserValidate.text, txtPwdValidate.text); 
+  validarForm() async {
+   return await  user.selectUserByLogin(txtUserValidate.text, txtPwdValidate.text); 
 
   }
   @override
@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: RaisedButton( 
-                 color: Colors.teal,
+                 color: Color.fromRGBO(159, 33, 29, 1.0),
                 padding: EdgeInsets.all(15.0),
                   child: Text("Entrar",
                   style: TextStyle(fontSize: 20.0)

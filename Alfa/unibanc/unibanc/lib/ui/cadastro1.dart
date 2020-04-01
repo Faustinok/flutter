@@ -13,7 +13,7 @@ class Cadastro1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey ,
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Color.fromRGBO(159, 33, 29, 1.0),//Colors.teal,
         title: Text("Cadastro"),
       ),
       body:   
@@ -57,7 +57,7 @@ class Cadastro1 extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: RaisedButton( 
-                 color: Colors.teal,
+                 color: Color.fromRGBO(159, 33, 29, 1.0),//Colors.teal,
                 padding: EdgeInsets.all(15.0),
                   child: Text("Proximo",
                   style: TextStyle(fontSize: 20.0)

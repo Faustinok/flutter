@@ -16,16 +16,16 @@ class Cadastro2 extends StatelessWidget {
   TextEditingController txtFildSobrenome = new TextEditingController(); 
   TextEditingController txtSenha = new TextEditingController();
   validarForm(){
-   return user.selectUser(newEmail, txtSenha.text); 
+   return user.selectUserByLogin(newEmail, txtSenha.text); 
 
   }  
   generateConta(){
     conta =rng.nextInt(999999); 
   }
 
-  cadastrar(String user, String sobrenome,String email, String senha ,double deb , int cont ){
+  cadastrar(String user, String sobrenome,String email, String senha ,double deb , int cont ) async{
     User userInsert = User(user,sobrenome,cont,email,senha,deb); 
-    userInsert.insertUser(userInsert);
+   await  userInsert.insertUser(userInsert);
     
   }
   @override
@@ -33,7 +33,7 @@ class Cadastro2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey ,
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Color.fromRGBO(159, 33, 29, 1.0),//Colors.teal,
         title: Text("Cadastro"),
       ),
       body:   
@@ -78,9 +78,9 @@ class Cadastro2 extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: RaisedButton( 
-                 color: Colors.teal,
+                 color: Color.fromRGBO(159, 33, 29, 1.0),//Colors.teal,
                 padding: EdgeInsets.all(15.0),
-                  child: Text("Salvar",
+                  child: Text("Cadastrar",
                   style: TextStyle(fontSize: 20.0)
                   ),
                   shape: RoundedRectangleBorder(
@@ -90,6 +90,7 @@ class Cadastro2 extends StatelessWidget {
                   onPressed: () {
                     generateConta();
                     cadastrar(newUser,txtFildSobrenome.text,newEmail,txtSenha.text,debito,conta);
+                    /*
                     userValidator = validarForm();
                     if (userValidator.id == null){
                       txtFildSobrenome.text ="";
@@ -103,6 +104,7 @@ class Cadastro2 extends StatelessWidget {
                         )
                         );                      
                     }                    
+                    */
 
                   },
                   ),

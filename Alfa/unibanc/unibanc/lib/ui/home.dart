@@ -4,51 +4,97 @@ import 'package:unibanc/user/user.dart';
 import 'login.dart';
 
 class Home extends StatelessWidget {
+
   User user;
   Home(this.user);
-  int _selectedIndex =0;
 
-void _onItemTapped(int index) {
-  
-    _selectedIndex = index;
-    print("index $_selectedIndex");
-  }
   @override
   Widget build(BuildContext context) {
+      double _height =MediaQuery.of(context).size.height;
+  double _width =MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor:Color.fromRGBO(159, 33, 29, 1.0),
-        title: Text(user.nome),
-        actions: <Widget>[ 
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: Icon(Icons.power_settings_new),
-              onPressed: () {
-                    Navigator.push(context,
-                        (MaterialPageRoute(builder: (context) => Login())));                
-              },
-            ),
-          )
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(159, 33, 29, 1.0),        
-        items: const <BottomNavigationBarItem> [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color:Colors.white ),
-            title: Text("Inico",style: TextStyle(color: Colors.white),),            
-            backgroundColor: Colors.white,
-            ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu,color:Colors.white ,),
-            title: Text("Menu",style: TextStyle(color: Colors.white),),                       
-            )            
-        ],
-        currentIndex:_selectedIndex,
-        onTap: _onItemTapped,
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(159, 33, 29, 1.0),
+          title: Text(user.nome),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.power_settings_new),
+                onPressed: () {
+                  Navigator.push(context,
+                      (MaterialPageRoute(builder: (context) => Login())));
+                },
+              ),
+            )
+          ],
         ),
+        body: 
+        Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  height: 70,
+                  width: 180,
+                  decoration: BoxDecoration(
+                    
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ), 
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.attach_money, color: Colors.white,size: 35,),
+                      Text(user.debito.toString(), style: TextStyle(fontSize: 32),)
+                    ],
+                  )
+                ),
+                 Container(
+                  height: 70,
+                  width: 180,
+                  decoration: BoxDecoration(
+                    
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ), 
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Conta ", style: TextStyle(fontSize: 20),),
+                      Text(user.conta.toString(), style: TextStyle(fontSize: 32),)
+                    ],
+                  )
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top:50),
+              child: Card(          
+                  child:ListTile(
+                    title: Text("Transferencia"),
+                  ),
+                  ),
+                
+              ),
+               Card(          
+                  child:ListTile(
+                    title: Text("Extrato"),
+                  ),
+                  ),
+               Card(          
+                  child:ListTile(
+                    title: Text("Perfil"),
+                  ),
+                  ),                                   
+          ],
+        )
         
-    );
+        );
   }
 }

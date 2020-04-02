@@ -1,8 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:unibanc/user/user.dart';
-
-import 'home.dart';
+import 'login.dart';
 
 class Cadastro2 extends StatelessWidget {
   var rng = new Random();
@@ -88,7 +87,7 @@ class Cadastro2 extends StatelessWidget {
                         txtSenha.text, debito, conta);
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => Home(userValidator)),
+                            builder: (context) => Login()),
                         (Route<dynamic> route) => false);
                   },
                 ),

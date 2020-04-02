@@ -65,7 +65,7 @@ class User {
         onCreate: (db, version) {
           // Run the CREATE TABLE statement on the database.
           return db.execute(
-              "create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); create table movimentacao(id_from integer,id_to integer,dt_mov  REAL DEFAULT (datetime('now', 'localtime')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
+              "create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); create table movimentacao(id_from integer,id_to integer,valor REAL,dt_mov  REAL DEFAULT (datetime('now', 'localtime')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
         },
         version: 1,
       );
@@ -113,5 +113,30 @@ class User {
       return null;
     } 
      
-  }  
+  }
+  Future<User> selectUserByAcount(String email, String senha) async {
+    var client = await db;
+    User user;
+    final Future<List<Map<String, dynamic>>> futureMaps = client.query(
+        'usuario',
+        where: 'conta = ?',
+        whereArgs: [conta]);
+    var maps = await futureMaps;
+    if (maps.length != 0) {
+      user =User.fromMap(maps.first);
+      print(user.nome);
+      return user;      
+    } else {
+      return null;
+    } 
+     
+  }
+  Future<int> updatetUser(User user) async {
+    return initDb().then((db) {
+      print("alterado");
+      return db.update("usuario", user.toMap(),where: "id = ?",whereArgs: [user.id]);
+    });
+    
+  }    
+   
 }

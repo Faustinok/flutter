@@ -6,6 +6,13 @@ import 'login.dart';
 class Home extends StatelessWidget {
   User user;
   Home(this.user);
+  int _selectedIndex =0;
+
+void _onItemTapped(int index) {
+  
+    _selectedIndex = index;
+    print("index $_selectedIndex");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +32,23 @@ class Home extends StatelessWidget {
           )
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(159, 33, 29, 1.0),        
+        items: const <BottomNavigationBarItem> [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color:Colors.white ),
+            title: Text("Inico",style: TextStyle(color: Colors.white),),            
+            backgroundColor: Colors.white,
+            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu,color:Colors.white ,),
+            title: Text("Menu",style: TextStyle(color: Colors.white),),                       
+            )            
+        ],
+        currentIndex:_selectedIndex,
+        onTap: _onItemTapped,
+        ),
+        
     );
   }
 }

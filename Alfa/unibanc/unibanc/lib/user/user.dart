@@ -19,6 +19,9 @@ class User {
   String get email => _email;
   String get senha => _senha;
   double get debito => _debito;
+  set debito(double valor) {
+    _debito= valor;
+  }
 
   User.vazio();
   User(this._nome, this._sobrenome, this._conta, this._email, this._senha,this._debito);
@@ -64,8 +67,8 @@ class User {
         // When the database is first created, create a table to store dogs.
         onCreate: (db, version) {
           // Run the CREATE TABLE statement on the database.
-          return db.execute(
-              "create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); create table movimentacao(id_from integer,id_to integer,valor REAL,dt_mov  REAL DEFAULT (datetime('now', 'localtime')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
+           db.execute("create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); ");
+           db.execute("create table movimentacao(id_from integer,id_to integer,valor REAL,dt_mov  REAL DEFAULT (datetime(\'now\', \'localtime\')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
         },
         version: 1,
       );

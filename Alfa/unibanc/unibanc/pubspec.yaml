@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   sqflite: any
   path: any
+  flutter_money_formatter: ^0.8.3
+  moneytextformfield: ^0.3.5+1
 
 dev_dependencies:
   flutter_test:

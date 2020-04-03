@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unibanc/ui/transferencia1.dart';
 import 'package:unibanc/user/user.dart';
 
+import 'extrato.dart';
 import 'login.dart';
 
 class Home extends StatelessWidget {
@@ -90,10 +91,7 @@ class Home extends StatelessWidget {
                     Navigator.push(
                         context,
                         (MaterialPageRoute(
-                            builder: (context) => Transferencia1(user)
-                            )
-                        )
-                      );
+                            builder: (context) => Transferencia1(user))));
                   },
                 ),
               ),
@@ -101,13 +99,14 @@ class Home extends StatelessWidget {
             Card(
               child: ListTile(
                 title: Text("Extrato"),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      (MaterialPageRoute(
+                          builder: (context) => Extrato(user))));
+                },
               ),
-            ),
-            Card(
-              child: ListTile(
-                title: Text("Perfil"),
-              ),
-            ),
+            )
           ],
         ));
   }

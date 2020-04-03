@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/user/movimentacao.dart';
 import 'package:unibanc/user/user.dart';
+import 'package:moneytextformfield/moneytextformfield.dart';
+
+import 'home.dart';
 
 class Transferencia2 extends StatelessWidget {
   User userFrom;
-  User userTo; 
-  Transferencia2(this.userFrom,this.userTo);
+  User userTo;
+  double valorTransf;
+  Transferencia2(this.userFrom, this.userTo);
   TextEditingController txtValor = new TextEditingController();
+  transferencia(BuildContext context) {
+    valorTransf = double.parse(txtValor.text);
+    Movimentacao mov = new Movimentacao(userFrom.id, userTo.id, valorTransf);
+    userFrom.debito = userFrom.debito - valorTransf;
+    userTo.debito = userTo.debito + valorTransf;
+    userFrom.updatetUser(userFrom);
+    userTo.updatetUser(userTo);
+    mov.insertMov(mov);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Home(userFrom)),
+        (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,41 +35,48 @@ class Transferencia2 extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          
           children: <Widget>[
-            Text("userFrom ${userFrom.nome} "),
-            Text("userTo ${userTo.nome} "),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0,120.0,20.0,20.0),
-            child: TextField(
-                  controller: txtValor,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: "Valor",
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: OutlineInputBorder(),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      ),
-                      ),
-                      
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Container(
+                height: 35,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
+                    ),
+                    color: Colors.white30),
+                child: Text(
+                  "Destinatario: ${userTo.nome} ${userTo.sobrenome}",
+                  style: TextStyle(fontSize: 20),
                 ),
-          ),
-             Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: RaisedButton(
-                  color: Color.fromRGBO(159, 33, 29, 1.0),
-                  padding: EdgeInsets.all(15.0),
-                  child: Text("Transferir", style: TextStyle(fontSize: 20.0)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  onPressed: () { 
-                    
-                  },
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 80.0, 20.0, 20.0),
+                child: MoneyTextFormField(
+                    settings: MoneyTextFormFieldSettings(
+                        controller: txtValor,
+                        appearanceSettings: AppearanceSettings(
+                          labelText: "Valor",
+                        ),
+                        moneyFormatSettings: MoneyFormatSettings(
+                            amount: 0.00, currencySymbol: 'R\$')))),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: RaisedButton(
+                color: Color.fromRGBO(159, 33, 29, 1.0),
+                padding: EdgeInsets.all(15.0),
+                child: Text("Transferir", style: TextStyle(fontSize: 20.0)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-              ),          
+                onPressed: () {
+                  transferencia(context);
+                },
+              ),
+            ),
           ],
         ),
       ),

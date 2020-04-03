@@ -36,14 +36,16 @@ class Movimentacao {
         // When the database is first created, create a table to store dogs.
         onCreate: (db, version) {
           // Run the CREATE TABLE statement on the database.
-          return db.execute(
-              "create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); create table movimentacao(id_from integer,id_to integer,valor REAL,dt_mov  REAL DEFAULT (datetime('now', 'localtime')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
+          
+           db.execute("create table usuario (id integer primary key,nome text,sobrenome text,conta integer,email text,senha text,debito real,UNIQUE(email)); ");
+           db.execute("create table movimentacao(id_from integer,id_to integer,valor REAL,dt_mov  REAL DEFAULT (datetime(\'now\', \'localtime\')),FOREIGN KEY(id_from) REFERENCES usuario(id),FOREIGN KEY(id_to) REFERENCES usuario(id));");
+        
         },
         version: 1,
       );
     });
   }
-  Future<int> insertUser(Movimentacao mov) async {
+  Future<int> insertMov(Movimentacao mov) async {
     return initDb().then((db) {
       print("inserido");
       return db.insert("movimentacao", mov.toMap());

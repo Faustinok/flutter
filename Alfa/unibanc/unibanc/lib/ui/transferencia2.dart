@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/user/user.dart';
 
 class Transferencia2 extends StatelessWidget {
-  TextEditingController txtContaDestino = new TextEditingController();
+  User userFrom;
+  User userTo; 
+  Transferencia2(this.userFrom,this.userTo);
+  TextEditingController txtValor = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,13 +19,15 @@ class Transferencia2 extends StatelessWidget {
         child: Column(
           
           children: <Widget>[
+            Text("userFrom ${userFrom.nome} "),
+            Text("userTo ${userTo.nome} "),
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0,120.0,20.0,20.0),
             child: TextField(
-                  controller: txtContaDestino,
+                  controller: txtValor,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      labelText: "Conta de destino",
+                      labelText: "Valor",
                       labelStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(),
                       enabledBorder: const OutlineInputBorder(

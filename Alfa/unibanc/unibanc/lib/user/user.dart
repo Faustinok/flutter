@@ -114,7 +114,7 @@ class User {
     } 
      
   }
-  Future<User> selectUserByAcount(String email, String senha) async {
+  Future<User> selectUserByAcount(int conta) async {
     var client = await db;
     User user;
     final Future<List<Map<String, dynamic>>> futureMaps = client.query(

@@ -90,7 +90,7 @@ class Home extends StatelessWidget {
                     Navigator.push(
                         context,
                         (MaterialPageRoute(
-                            builder: (context) => Transferencia1()
+                            builder: (context) => Transferencia1(user)
                             )
                         )
                       );

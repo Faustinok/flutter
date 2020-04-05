@@ -6,11 +6,11 @@ class Extrato extends StatelessWidget {
   User user;
   Extrato(this.user);
   UserMov mov = new UserMov.vazio();
+  int conta;
   List<UserMov> movimentacoes = new List();
- getMov(int id) {
- mov.selectMov(id).then((map){
-   movimentacoes= map.toList();
- });
+ getMov(int id) async {
+ movimentacoes =await mov.selectMov(user.id);
+ print(movimentacoes);
  
  }
   

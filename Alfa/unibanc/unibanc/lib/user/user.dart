@@ -140,6 +140,7 @@ class User {
       return db.update("usuario", user.toMap(),where: "id = ?",whereArgs: [user.id]);
     });
     
-  }    
+  }
+     
    
 }

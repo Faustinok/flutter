@@ -58,7 +58,7 @@ static Database _db;
     var client = await db;
     UserMov usermov;
     final Future<List<Map<String, dynamic>>> futureMaps = 
-client.rawQuery("select user_From.nome as nomeFrom, user_to.nome as nomeTo, mov.valor as valor, date(dt_mov) as dataMov, 0 as tipo from usuario user_From inner join movimentacao mov on user_From.id =mov.id_from inner join usuario user_to on user_to.id =mov.id_from where user_From.id = $id;"
+client.rawQuery("select user_From.nome as nomeFrom, user_to.nome as nomeTo, mov.valor as valor, date(dt_mov) as dataMov, 0 as tipo from usuario user_From inner join movimentacao mov on user_From.id =mov.id_from inner join usuario user_to on user_to.id =mov.id_to where user_From.id = $id;"
 );
  
     var maps = await futureMaps;
@@ -69,6 +69,18 @@ client.rawQuery("select user_From.nome as nomeFrom, user_to.nome as nomeTo, mov.
     } else {
       return null;
     } 
+     
+  }
+     Future<int> selectCount() async {
+    var client = await db; 
+    int bla;
+    
+    final Future<List<Map<String, dynamic>>> futureMaps =  client.rawQuery("select count(*) as conta from movimentacao;") ;
+    var maps = await futureMaps;
+    if(maps.length !=0 ) {
+      bla = maps[0]["conta"];
+      return bla;
+    }
      
   }
   

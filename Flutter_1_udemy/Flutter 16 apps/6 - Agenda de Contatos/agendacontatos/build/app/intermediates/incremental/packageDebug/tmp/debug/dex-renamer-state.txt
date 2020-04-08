@@ -1,4 +1,0 @@
-#Tue Apr 07 16:18:34 BRT 2020
-base.0=C\:\\gabriel\\flutter\\Flutter_1_udemy\\Flutter 16 apps\\6 - Agenda de Contatos\\agendacontatos\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

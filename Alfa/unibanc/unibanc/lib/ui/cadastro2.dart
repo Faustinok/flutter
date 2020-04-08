@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:unibanc/dao/user_dao.dart';
 import 'package:unibanc/user/user.dart';
 import 'login.dart';
 
@@ -8,6 +9,7 @@ class Cadastro2 extends StatelessWidget {
   int id;
   User user = new User.vazio();
   User userValidator;
+  UserDao _dao = UserDao();
   final String newUser;
   final String newEmail;
   double debito = 1000.0;
@@ -23,7 +25,7 @@ class Cadastro2 extends StatelessWidget {
   cadastrar(String user, String sobrenome, String email, String senha,
       double deb, int cont) {
     userValidator = User(user, sobrenome, cont, email, senha, deb);
-    userValidator.insertUser(userValidator);
+    _dao.insertUser(userValidator);
   }
 
   @override

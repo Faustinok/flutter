@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/dao/usermov_dao.dart';
 import 'package:unibanc/user/UserMov.dart'; 
 import 'package:unibanc/user/user.dart';
 
@@ -6,10 +7,11 @@ class Extrato extends StatelessWidget {
   User user;
   Extrato(this.user);
   UserMov mov = new UserMov.vazio(); 
+  userMovDao _umDao = userMovDao();
   List<UserMov> movs = List();
   
   getmovimento() async {
-     movs= await mov.selectMov2(user.id);
+     movs= await _umDao.selectMov2(user.id);
      movs.length;
   }
   
@@ -31,7 +33,7 @@ class Extrato extends StatelessWidget {
       ),
       body: FutureBuilder(
         initialData: List(),
-        future: Future.delayed(Duration(seconds: 2)).then((value)=> mov.selectMov2(user.id)),
+        future: Future.delayed(Duration(seconds: 2)).then((value)=> _umDao.selectMov2(user.id)),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             
@@ -54,9 +56,7 @@ class Extrato extends StatelessWidget {
               // TODO: Handle this case.
               break;
             case ConnectionState.done:
-              List<UserMov> movimento = snapshot.data ;
-              //print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH ${snapshot.data}");
-
+              List<UserMov> movimento = snapshot.data ;            
               return ListView.builder(
                 itemCount: movimento.length,
                 itemBuilder: (context,indice){

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/dao/movimentacao_dao.dart';
+import 'package:unibanc/dao/user_dao.dart';
 import 'package:unibanc/user/movimentacao.dart';
 import 'package:unibanc/user/user.dart';
 import 'package:moneytextformfield/moneytextformfield.dart';
@@ -8,6 +10,8 @@ import 'home.dart';
 class Transferencia2 extends StatelessWidget {
   User userFrom;
   User userTo;
+  UserDao _dao = UserDao();
+  MovimentacaoDao _movDao = MovimentacaoDao();
   double valorTransf;
   Transferencia2(this.userFrom, this.userTo);
   TextEditingController txtValor = new TextEditingController();
@@ -16,9 +20,9 @@ class Transferencia2 extends StatelessWidget {
     Movimentacao mov = new Movimentacao(userFrom.id, userTo.id, valorTransf);
     userFrom.debito = userFrom.debito - valorTransf;
     userTo.debito = userTo.debito + valorTransf;
-    userFrom.updatetUser(userFrom);
-    userTo.updatetUser(userTo);
-    mov.insertMov(mov);
+    _dao.updatetUser(userFrom);
+    _dao.updatetUser(userTo);
+    _movDao.insertMov(mov);
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => Home(userFrom)),
         (Route<dynamic> route) => false);

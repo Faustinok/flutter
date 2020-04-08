@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/dao/user_dao.dart';
 import 'package:unibanc/ui/transferencia2.dart';
 import 'package:unibanc/user/user.dart';
 
 class Transferencia1 extends StatelessWidget {
   User userfrom;
   User userTo;
+  UserDao _dao = UserDao();
   Transferencia1(this.userfrom);
   getUserTo(BuildContext context, int nconta) async {
-    userTo = await userfrom.selectUserByAcount(nconta);
+    userTo = await _dao.selectUserByAcount(nconta);
     if (userTo == null) {
       txtContaDestino.text = "";
     } else {

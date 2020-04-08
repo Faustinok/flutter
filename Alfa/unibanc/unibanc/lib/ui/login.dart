@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unibanc/dao/user_dao.dart';
 import 'package:unibanc/user/user.dart';
 
 import 'cadastro1.dart';
@@ -6,11 +7,12 @@ import 'home.dart';
 
 class Login extends StatelessWidget {
   User user = new User.vazio();
+  UserDao _dao = UserDao();
   User userValidator;
   TextEditingController txtUserValidate = new TextEditingController();
   TextEditingController txtPwdValidate = new TextEditingController();
   validarForm(BuildContext context) async {
-    userValidator = await user.selectUserByLogin(txtUserValidate.text, txtPwdValidate.text);
+    userValidator = await _dao.selectUserByLogin(txtUserValidate.text, txtPwdValidate.text);
     if (userValidator == null) {
       txtUserValidate.text = "";
       txtPwdValidate.text = "";

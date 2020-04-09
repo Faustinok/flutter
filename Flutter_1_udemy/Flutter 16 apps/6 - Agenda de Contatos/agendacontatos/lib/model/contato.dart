@@ -14,7 +14,15 @@ class Contato {
   void set nome(String novoNome) {
     _nome = novoNome;
   }
-  
+  void set email(String novoEmail) {
+    _email = novoEmail;
+  }  
+  void set telefone(String novoTelefone) {
+    _telefone = novoTelefone;
+  }   
+    void set id(int novoid) {
+    _id = novoid;
+  }
   Contato.fromMap(Map map) {
     _id = map["id"];
     _nome = map["nome"];

@@ -15,13 +15,11 @@ class HomeContatos extends StatefulWidget {
 class _HomeContatosState extends State<HomeContatos> {
    ContatoDao _dao = ContatoDao();
   List<Contato> contatos = List();
-  getContatos() async {
-    contatos =await _dao.selectContatos();
-  }
+ 
   @override
   void initState() {
     super.initState();
-    getContatos();    
+    getcontatos();
 
   }
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class _HomeContatosState extends State<HomeContatos> {
         }
         ),
       body: ListView.builder(
-        itemCount: contatos.length ,
+        itemCount: contatos != null ? contatos.length : 0 ,
         padding: EdgeInsets.all(10.0),
         itemBuilder: (context, index){
           return _contatosCard(context, contatos[index]);
@@ -60,8 +58,10 @@ class _HomeContatosState extends State<HomeContatos> {
                 height: 80.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: contato.img != null ? 
-                  FileImage(File(contato.img)) : AssetImage("images/person_image.jpg")
+                  image:DecorationImage( 
+                    image: contato.img != null ? 
+                            FileImage(File(contato.img)) : AssetImage("images/person_image.jpg"),
+                  ),
                 ),
               ),
               Padding(
@@ -89,10 +89,20 @@ class _HomeContatosState extends State<HomeContatos> {
       },
     );
   }
-  showContatoCadastro({Contato contato} ){
-    Navigator.push(context, 
+  showContatoCadastro({Contato contato} )async {
+    await Navigator.push(context, 
     MaterialPageRoute(builder: (context)=> ContatoCadastro(contato: contato,)
     )
+    
     );
+    getcontatos();
+  }
+  getcontatos(){
+       _dao.selectContatos().then((listadecontatos){
+      setState(() {
+        contatos=listadecontatos;
+      }); 
+
+    });
   }
 }

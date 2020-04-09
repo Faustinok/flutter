@@ -17,7 +17,6 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
   TextEditingController txtemail = new TextEditingController();
   TextEditingController txttelefone = new TextEditingController();
   bool _useredited = false;
-  String nomeContato ="Novo Contato";
   Contato editedContato;
  ContatoDao _dao = ContatoDao();
 
@@ -25,10 +24,9 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
 
   salvarAlterarContato(BuildContext context) async {
      if (widget.contato == null) {
-    editedContato = Contato(txtnome.text,txtemail.text, txttelefone.text,"images/person_image.jpg");
+    editedContato = Contato(txtnome.text,txtemail.text, txttelefone.text,null);
      _dao.saveContato(editedContato);
-     } else {
-       editedContato = Contato(txtnome.text,txtemail.text, txttelefone.text,"fdkdg");
+     } else { 
          _dao.updateContato(editedContato);    
      }
     
@@ -50,7 +48,6 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
       txtnome.text = editedContato.nome;
       txtemail.text = editedContato.email;
       txttelefone.text = editedContato.telefone;
-      nomeContato= editedContato.nome;
 
     }
   }
@@ -60,7 +57,7 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text(nomeContato),
+        title: Text(editedContato.nome == null ? "Novo contato" : editedContato.nome),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -68,6 +65,9 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
           child: Icon(Icons.save),
           onPressed: () {
             if (txtnome.text.isNotEmpty && txttelefone.text.isNotEmpty){ 
+              editedContato.nome =txtnome.text;
+              editedContato.email =txtemail.text;
+              editedContato.telefone =txttelefone.text;
               salvarAlterarContato(context);
             }
           }),
@@ -94,6 +94,10 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
                 decoration: InputDecoration(labelText: "nome"),
                 onChanged: (text) {
                   _useredited = true;
+                    setState(() {
+                      editedContato.nome=text;
+                    });
+
                   setState(() {
                     editedContato.nome = text;
                   });
@@ -104,6 +108,7 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
                 decoration: InputDecoration(labelText: "email"),
                 onChanged: (text) {
                   _useredited = true; 
+                    editedContato.email=text;              
                 },
                 keyboardType: TextInputType.emailAddress,
               ),   
@@ -112,6 +117,7 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
                 decoration: InputDecoration(labelText: "telefone"),
                 onChanged: (text) {
                   _useredited = true; 
+                    editedContato.telefone=text;
                 },
                 keyboardType: TextInputType.phone
               ),              

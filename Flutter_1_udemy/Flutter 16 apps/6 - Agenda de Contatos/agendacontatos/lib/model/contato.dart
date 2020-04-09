@@ -11,7 +11,10 @@ class Contato {
   get email => _email;
   get telefone => _telefone;
   get img => _img;
-
+  void set nome(String novoNome) {
+    _nome = novoNome;
+  }
+  
   Contato.fromMap(Map map) {
     _id = map["id"];
     _nome = map["nome"];

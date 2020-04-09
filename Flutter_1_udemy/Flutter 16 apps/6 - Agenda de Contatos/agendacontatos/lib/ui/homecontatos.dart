@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:agendacontatos/model/contato.dart';
-import 'package:agendacontatos/model/dbContatos.dart';
+import 'package:agendacontatos/model/contato_dao.dart'; 
+import 'package:agendacontatos/ui/page_contato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,9 +13,10 @@ class HomeContatos extends StatefulWidget {
 }
 
 class _HomeContatosState extends State<HomeContatos> {
+   ContatoDao _dao = ContatoDao();
   List<Contato> contatos = List();
   getContatos() async {
-    contatos =await ContatoDb.internal().selectContatos();
+    contatos =await _dao.selectContatos();
   }
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _HomeContatosState extends State<HomeContatos> {
         backgroundColor: Colors.red,
         child: Icon(Icons.add),
         onPressed: (){
+          showContatoCadastro();
           
         }
         ),
@@ -81,6 +84,15 @@ class _HomeContatosState extends State<HomeContatos> {
           ),
           ),
       ),
+      onTap: (){
+        showContatoCadastro(contato: contato);
+      },
+    );
+  }
+  showContatoCadastro({Contato contato} ){
+    Navigator.push(context, 
+    MaterialPageRoute(builder: (context)=> ContatoCadastro(contato: contato,)
+    )
     );
   }
 }

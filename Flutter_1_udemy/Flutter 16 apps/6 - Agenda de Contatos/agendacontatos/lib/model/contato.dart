@@ -4,6 +4,7 @@ class Contato {
   String _email;
   String _telefone;
   String _img;
+  Contato.vazio();
   Contato(this._nome, this._email,this._telefone, this._img);
   get id => _id;
   get nome => _nome;

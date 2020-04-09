@@ -64,6 +64,7 @@ class _HomeContatosState extends State<HomeContatos> {
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(contato.nome ?? "",
                     style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),

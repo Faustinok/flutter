@@ -54,7 +54,43 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    Future<bool> _requestpop(){
+      if(_useredited){
+        showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text("Descartar alterações? "),
+              content: Text("caso saia, alterações serão perdidas"),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child:Text("Cancelar")
+                  ),
+                FlatButton(
+                  onPressed:() {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                   child: Text("Sim")
+                   )
+              ],
+            );
+          
+          }
+          
+          );
+      return Future.value(false);
+      } else {
+        return Future.value(true);
+      }
+    }
+    return 
+    WillPopScope(
+       onWillPop: _requestpop,
+    child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
         title: Text(editedContato.nome == null ? "Novo contato" : editedContato.nome),
@@ -124,6 +160,7 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
             ],    
           ),
           ),
+    ),
     );
-  }
+  }  
 }

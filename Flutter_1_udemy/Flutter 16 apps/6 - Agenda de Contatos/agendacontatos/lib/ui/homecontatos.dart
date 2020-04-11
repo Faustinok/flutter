@@ -5,6 +5,7 @@ import 'package:agendacontatos/model/contato_dao.dart';
 import 'package:agendacontatos/ui/page_contato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeContatos extends StatefulWidget {
   @override
@@ -15,6 +16,54 @@ class HomeContatos extends StatefulWidget {
 class _HomeContatosState extends State<HomeContatos> {
    ContatoDao _dao = ContatoDao();
   List<Contato> contatos = List();
+
+    showOpcoesContato(BuildContext context, Contato contato,int index){
+      showModalBottomSheet(
+        
+        context: context,
+         builder: (context){
+          return BottomSheet( 
+            onClosing: (){},
+            builder: (context){
+            return Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: (){
+                      launch("tel:${contato.telefone}");
+                      Navigator.pop(context);
+                    },
+                     child: Text("Ligar",style: TextStyle(color: Colors.red),),
+                     
+                     ),
+                  FlatButton(
+                    onPressed: (){
+                      showContatoCadastro(contato: contato);
+                    },
+                     child: Text("Editar",style: TextStyle(color: Colors.red),),
+                     ),
+                  FlatButton(
+                    onPressed: (){
+                      _dao.deleteContatoById(contato.id);
+                      setState(() {
+                      contatos.removeAt(index);
+                      Navigator.pop(context);
+                      });
+                      
+
+                    },
+                     child: Text("Excluir ",style: TextStyle(color: Colors.red),),
+                     ),                                          
+                ],
+              ),
+            );
+          }
+          );
+        }        
+        );
+    }
  
   @override
   void initState() {
@@ -42,11 +91,11 @@ class _HomeContatosState extends State<HomeContatos> {
         itemCount: contatos != null ? contatos.length : 0 ,
         padding: EdgeInsets.all(10.0),
         itemBuilder: (context, index){
-          return _contatosCard(context, contatos[index]);
+          return _contatosCard(context, contatos[index],index);
         }),
     );
   }
-  Widget _contatosCard (BuildContext context, Contato contato) {
+  Widget _contatosCard (BuildContext context, Contato contato, int index) {
     return GestureDetector(
       child: Card(
         child: Padding(
@@ -85,11 +134,12 @@ class _HomeContatosState extends State<HomeContatos> {
           ),
       ),
       onTap: (){
-        showContatoCadastro(contato: contato);
+        showOpcoesContato(context,contato,index);
       },
     );
   }
   showContatoCadastro({Contato contato} )async {
+    
     await Navigator.push(context, 
     MaterialPageRoute(builder: (context)=> ContatoCadastro(contato: contato,)
     )

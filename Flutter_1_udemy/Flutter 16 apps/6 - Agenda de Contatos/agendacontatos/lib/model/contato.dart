@@ -19,6 +19,9 @@ class Contato {
   }  
   void set telefone(String novoTelefone) {
     _telefone = novoTelefone;
+  }  
+  void set img(String novoimg) {
+    _img = novoimg;
   }   
     void set id(int novoid) {
     _id = novoid;

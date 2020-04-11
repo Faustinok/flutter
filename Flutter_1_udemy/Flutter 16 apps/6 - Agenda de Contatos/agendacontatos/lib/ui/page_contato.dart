@@ -3,6 +3,7 @@ import 'package:agendacontatos/model/contato.dart';
 import 'package:agendacontatos/model/contato_dao.dart';
 import 'package:agendacontatos/ui/homecontatos.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class ContatoCadastro extends StatefulWidget {
@@ -35,25 +36,6 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
         (Route<dynamic> route) => false);
   }
 
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    if (widget.contato == null) {
-      editedContato = Contato.vazio();
-    } else {
-      editedContato = widget.contato;
-      txtnome.text = editedContato.nome;
-      txtemail.text = editedContato.email;
-      txttelefone.text = editedContato.telefone;
-
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     Future<bool> _requestpop(){
       if(_useredited){
         showDialog(
@@ -87,6 +69,26 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
         return Future.value(true);
       }
     }
+    
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.contato == null) {
+      editedContato = Contato.vazio();
+    } else {
+      editedContato = widget.contato;
+      txtnome.text = editedContato.nome;
+      txtemail.text = editedContato.email;
+      txttelefone.text = editedContato.telefone;
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return 
     WillPopScope(
        onWillPop: _requestpop,
@@ -124,6 +126,14 @@ class _ContatoCadastroState extends State<ContatoCadastro> {
                               )
                               ),
                 ),
+                onTap: (){
+                  ImagePicker.pickImage(source: ImageSource.camera).then((file){
+                    if(file == null) return;
+                    setState(() {
+                      editedContato.img = file.path;
+                    });
+                  });
+                },
               ),
               TextField(
                 controller: txtnome,

@@ -39,7 +39,7 @@ class _TextComposerState extends State<TextComposer> {
                  },
                  onSubmitted: (text){
                    widget.sendMessage(text:text);
-                   txtmsg.clear();
+                   txtmsg.text="";
                    setState(() {
                      _isComposed = false;
                    });
@@ -49,13 +49,14 @@ class _TextComposerState extends State<TextComposer> {
                IconButton(
                  icon: Icon(Icons.send), 
                  onPressed: () {
-                   _isComposed ? (){
-                     widget.sendMessage(text: txtmsg.text);
-                     txtmsg.clear();
+                   if (_isComposed){
+
                      setState(() {
                        _isComposed = false;
+                       widget.sendMessage(text: txtmsg.text);
+                      txtmsg.text="";
                      });
-                   } : null;
+                   } else return null;
 
                  }
                  )

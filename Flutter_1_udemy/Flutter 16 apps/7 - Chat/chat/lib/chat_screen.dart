@@ -19,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .putFile(imageFile);
       StorageTaskSnapshot snapshot = await task.onComplete;
       String url = await snapshot.ref.getDownloadURL(); 
-      print(url);
+      print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH $url");
     }
 
     Firestore.instance.collection("messages").add({"text": text});

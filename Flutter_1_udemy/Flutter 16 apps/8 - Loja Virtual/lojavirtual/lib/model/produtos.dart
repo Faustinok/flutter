@@ -4,7 +4,7 @@ class Produtos {
 String id;
 String title;
 String descricao;
-String preco;
+double preco;
 List images;
 List cores; 
 

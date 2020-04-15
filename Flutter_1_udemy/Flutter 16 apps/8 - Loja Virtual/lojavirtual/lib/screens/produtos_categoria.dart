@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/model/produtos.dart';
+import 'package:lojavirtual/tiles/produto_tile.dart';
 
 class ProdutoCategoria extends StatelessWidget {
   final DocumentSnapshot snapshot;
@@ -29,8 +31,26 @@ class ProdutoCategoria extends StatelessWidget {
                return  TabBarView(
            physics: NeverScrollableScrollPhysics(),
            children: [
-             Container(color: Colors.blue,),
-             Container(color: Colors.yellow),
+             GridView.builder(
+               padding: EdgeInsets.all(4.0),               
+               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                 crossAxisCount: 2,
+                 mainAxisSpacing: 4.0,
+                 crossAxisSpacing: 4.0,
+                 childAspectRatio: 0.65
+                 ),
+                itemCount: snapshotItens.data.documents.length,
+                itemBuilder: (context, index) {
+                  return ProdutoTile("grid",Produtos.fromDocument(snapshotItens.data.documents[index]));
+                }
+                ),
+             ListView.builder(
+               padding: EdgeInsets.all(4.0),
+               itemCount: snapshotItens.data.documents.length,
+                itemBuilder: (context, index) {
+                  return ProdutoTile("list",Produtos.fromDocument(snapshotItens.data.documents[index]));
+                }
+                ),
            ]
            );
              }

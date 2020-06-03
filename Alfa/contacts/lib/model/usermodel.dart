@@ -1,4 +1,4 @@
-class UserModel {
+class ContatoModel {
   String _id;
   String _nome;
   String _sobrenome;
@@ -7,12 +7,13 @@ class UserModel {
   String _endereco;
   String _picture;
 
-UserModel.nome(this._nome,this._telefone);
-UserModel.nomeSobrenome(this._nome,this._sobrenome,this._telefone);
-UserModel.nomeLocation(this._nome,this._sobrenome,this._telefone,this._location,this._endereco);
-UserModel.nomepicture(this._nome,this._sobrenome,this._telefone,this._picture);
-UserModel.nomeall(this._nome,this._sobrenome,this._telefone,this._location,this._endereco,this._picture);
+ContatoModel.nome(this._nome,this._telefone);
+ContatoModel.nomeSobrenome(this._nome,this._sobrenome,this._telefone);
+ContatoModel.nomeLocation(this._nome,this._sobrenome,this._telefone,this._location,this._endereco);
+ContatoModel.nomepicture(this._nome,this._sobrenome,this._telefone,this._picture);
+ContatoModel.nomeall(this._nome,this._sobrenome,this._telefone,this._location,this._endereco,this._picture);
 
+get id => _id;
 get nome => _nome;
 get sobrenome => _sobrenome;
 get telefone => _telefone;
@@ -27,8 +28,27 @@ set location (String newlocation) => _location = newlocation;
 set endereco (String newendereco) => _endereco = newendereco;
 set picture (String newpicture) => _picture = newpicture;
 
-UserModel.toMap(){
+ContatoModel.fromMap(Map map){
+  _id = map["id"];
+  _nome = map["nome"];
+  _sobrenome = map["sobrenome"];
+  _telefone = map["telefone"];
+  _location = map["location"];
+  _endereco = map["endereco"];
+  _picture = map["picture"];
 }
-UserModel.fromMap(){
-}
+  Map toMap() {
+    Map<String, dynamic> map = {
+      "nome": nome,
+      "sobrenome": sobrenome,
+      "telefone": telefone,
+      "location": location,
+      "endereco": endereco,
+      "picture": picture
+    };
+    if (id != null) {
+      map["id"] = id;
+    }
+    return map;
+  }   
 }

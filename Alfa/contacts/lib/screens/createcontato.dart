@@ -1,12 +1,15 @@
 import 'package:contacts/Dao/Daofirebase.dart';
 import 'package:contacts/components/textfields.dart';
 import 'package:contacts/model/contatoModel.dart';
+import 'package:contacts/model/userModel.dart';
 import 'package:flutter/material.dart';
 
 class CreateContato extends StatelessWidget {
+  UserModel userModel;
+  CreateContato(this.userModel);
   @override
   Widget build(BuildContext context) {
-    TextEditingController tsxtnome = TextEditingController();
+    TextEditingController txtnome = TextEditingController();
     TextEditingController txtsobrenome = TextEditingController();
     TextEditingController txtemail = TextEditingController();
     TextEditingController txttelefone = TextEditingController();
@@ -48,21 +51,27 @@ class CreateContato extends StatelessWidget {
                 Padding(padding: EdgeInsets.only(top: 8.0)),
                 TexfieldComponent(
                   label: "Nome",
-                  controller: tsxtnome,
+                  controller: txtnome,
                   obscure: false,
                   textInputType: TextInputType.text,
                 ),
                 TexfieldComponent(
                   label: "Sobrenome",
-                  controller: tsxtnome,
+                  controller: txtsobrenome,
                   obscure: false,
                   textInputType: TextInputType.text,
                 ),
                 TexfieldComponent(
                   label: "telefone",
-                  controller: tsxtnome,
+                  controller: txttelefone,
                   obscure: false,
                   textInputType: TextInputType.phone,
+                ),
+                TexfieldComponent(
+                  label: "email",
+                  controller: txtemail,
+                  obscure: false,
+                  textInputType: TextInputType.emailAddress,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
@@ -76,11 +85,17 @@ class CreateContato extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                     onPressed: () async {
-                      ContatoModel contatoModel = ContatoModel.nomeSobrenome(
-                          tsxtnome.text, txtsobrenome.text, txttelefone.text);
+                      ContatoModel contatoModel = ContatoModel.nomeall(
+                          txtnome.text,
+                          txtsobrenome.text,
+                          txttelefone.text,
+                          txtemail.text,
+                          "",
+                          "",
+                          "");
                       FirebaseDao firebaseDao = FirebaseDao.vazio();
-                      print("criando usuario");
-                      firebaseDao.criarContato(contatoModel);
+                      print("criando usuario ${userModel.userid}");
+                      firebaseDao.criarContato(contatoModel, userModel.userid);
                     },
                   ),
                 ),

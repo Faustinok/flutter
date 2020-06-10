@@ -53,7 +53,9 @@ class FirebaseDao {
           .document(firebaseUser.uid)
           .get();
 
-      return userModel = UserModel.fromMap(docUser.data);
+      userModel = UserModel.fromMap(docUser.data);
+      userModel.userid = firebaseUser.uid;
+      return userModel;
     }
   }
 
@@ -81,10 +83,12 @@ class FirebaseDao {
         .setData(userModel.toMap());
   }
 
-  Future<Null> criarContato(ContatoModel contatoModel) async {
+  Future<Null> criarContato(ContatoModel contatoModel, String uid) async {
+    print("blaaaaaaaaaaaaaaaaaaaaaaah");
+
     await Firestore.instance
         .collection("users")
-        .document(firebaseUser.uid)
+        .document(uid)
         .collection("contatos")
         .document()
         .setData(contatoModel.toMap());

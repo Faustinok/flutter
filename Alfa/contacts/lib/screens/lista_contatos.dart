@@ -1,3 +1,4 @@
+import 'package:contacts/model/contatoModel.dart';
 import 'package:contacts/model/userModel.dart';
 import 'package:contacts/screens/createcontato.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,10 @@ class _ListaContatosState extends State<ListaContatos> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CreateContato()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateContato(userModel)));
               },
             )
           ],

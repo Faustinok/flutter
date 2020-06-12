@@ -1,10 +1,10 @@
 import 'package:contacts/Dao/Daofirebase.dart';
+import 'package:contacts/components/preferences.dart';
 import 'package:contacts/components/textfields.dart';
 import 'package:contacts/model/userModel.dart';
 import 'package:contacts/screens/cadastro.dart';
 import 'package:contacts/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
-import '';
 
 class Login extends StatefulWidget {
   @override
@@ -15,6 +15,26 @@ class _LoginState extends State<Login> {
   FirebaseDao firebaseDao = FirebaseDao.vazio();
   TextEditingController txtLogin = TextEditingController();
   TextEditingController txtsenha = TextEditingController();
+
+  islogged() async {
+    String uid = "";
+    uid = await LocalStorage.getValue<String>('userId');
+    if (uid.isEmpty) {
+    } else {
+      FirebaseDao firebasedao = FirebaseDao.vazio();
+      var usermodel = await firebasedao.getUser(uid);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => ListaContatos(usermodel)),
+          (Route<dynamic> route) => false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    islogged();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +79,7 @@ class _LoginState extends State<Login> {
                       UserModel userModel = UserModel.vazio();
                       userModel = await firebaseDao.login(
                           email: txtLogin.text, senha: txtsenha.text);
+
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => ListaContatos(userModel)),
@@ -73,6 +94,7 @@ class _LoginState extends State<Login> {
                     onPressed: () async {
                       UserModel userModel = UserModel.vazio();
                       userModel = await firebaseDao.loginGoogle();
+                      LocalStorage.setValue<String>('userId', userModel.userid);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => ListaContatos(userModel)),

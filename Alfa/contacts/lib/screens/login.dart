@@ -133,7 +133,7 @@ class _LoginState extends State<Login> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.70, left: 20.0),
+                top: MediaQuery.of(context).size.height * 0.8, left: 20.0),
             child: GestureDetector(
               child: Text(
                 "Cadastre-se",

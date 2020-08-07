@@ -26,6 +26,7 @@ class _CreatecontatoState extends State<Createcontato> {
   String appbarTitle = "Novo contato";
   String image = "assets/personpng.png";
   FirebaseDao firebaseDao = FirebaseDao.vazio();
+  final _formKey = GlobalKey<FormState>();
 
   _inicializetxt() {
     //print("here");
